@@ -18,7 +18,10 @@ bot = commands.Bot(command_prefix=PREFIX, intents=intents, help_command=None)
 async def on_ready():
     extensions = ["exampleExtension"]
     for extension in extensions:
-        await bot.load_extension(f"extensions.{extension}")
+        try:
+            await bot.load_extension(f"extensions.{extension}")
+        except Exception as e:
+            print(f"An unexpected error occurred while loading {extension}: {e}")
     await bot.tree.sync()
     print(f"Logged in as {bot.user.name}")
 
